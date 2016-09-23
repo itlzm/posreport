@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>posreport</display-name>
+
+	<!-- 父路径参数配置 用于 js css 等文件前缀 -->
+	<context-param>
+		<param-name>baseUrl</param-name>
+		<param-value>/posreport</param-value>
+
+	</context-param>
+	<context-param>
+		<param-name>verno</param-name>
+		<param-value>201607120001</param-value>
+	</context-param>
+
+	<servlet>
+		<!--springmvc的核心是DispatcherServlet，它负责控制整个页面的请求路径 -->
+		<servlet-name>posReportServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!--初始化参数>/WEB-INF/classes/相当于src目录 -->
+		<init-param>
+			<!-- 这个param-name必须是contextConfigLocation applicationContext 为SpringMVC 
+				配置文件 -->
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:/META-INF/applicationContext.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!-- 映射serlvet 请求规则 -->
+	<servlet-mapping>
+		<servlet-name>posReportServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<session-config>
+		<session-timeout>240</session-timeout>
+	</session-config>
+
+	<!--处理从页面传递中文到后台而出现的中文乱码问题 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>  
